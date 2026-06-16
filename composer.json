@@ -1,0 +1,63 @@
+{
+  "name": "byte5/addressable",
+  "description": "Addresses package for Laravel",
+  "type": "library",
+  "license": "MIT",
+  "keywords": [
+    "laravel",
+    "address",
+    "addresses",
+    "schema.org",
+    "google-places",
+    "address-validation",
+    "geocoding"
+  ],
+  "authors": [
+    {
+      "name": "byte5 GmbH",
+      "email": "info@byte5.de"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "autoload": {
+    "psr-4": {
+      "Byte5\\Addressable\\Tests\\": "tests/",
+      "Byte5\\Addressable\\": "src/",
+      "Byte5\\Addressable\\Database\\Factories\\": "database/factories/",
+      "Byte5\\Addressable\\App\\": "src/App/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Byte5\\Addressable\\AddressableServiceProvider"
+      ]
+    }
+  },
+  "require": {
+    "php": "^8.2",
+    "commerceguys/addressing": "^2.0",
+    "illuminate/contracts": "^12.0|^13.0",
+    "illuminate/database": "^12.0|^13.0",
+    "illuminate/http": "^12.0|^13.0",
+    "illuminate/support": "^12.0|^13.0",
+    "league/iso3166": "^4.1",
+    "saloonphp/saloon": "^4.0"
+  },
+  "require-dev": {
+    "larastan/larastan": "^3.0",
+    "orchestra/testbench": "^10.0|^11.0",
+    "pestphp/pest": "^3.0|^4.0",
+    "pestphp/pest-plugin-laravel": "^3.0|^4.0"
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  },
+  "scripts": {
+    "test": "pest",
+    "stan": "phpstan analyse"
+  }
+}
