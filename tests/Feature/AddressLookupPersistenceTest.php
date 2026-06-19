@@ -1,7 +1,7 @@
 <?php
 
-use Byte5\Addressable\App\Models\Address;
 use Byte5\Addressable\App\Facades\AddressLookup;
+use Byte5\Addressable\App\Models\Address;
 use Byte5\Addressable\Tests\Fixtures\TestModel;
 use Saloon\Http\Faking\MockClient;
 use Saloon\Http\Faking\MockResponse;

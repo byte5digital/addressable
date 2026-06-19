@@ -2,9 +2,9 @@
 
 namespace Byte5\Addressable\App\Models;
 
-use Byte5\Addressable\Database\Factories\AddressFactory;
 use Byte5\Addressable\App\Data\PostalAddress;
 use Byte5\Addressable\App\Support\Config;
+use Byte5\Addressable\Database\Factories\AddressFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -53,7 +53,7 @@ class Address extends Model
     protected function country(): Attribute
     {
         return Attribute::make(
-            set: fn(?string $value) => $value === null ? null : strtoupper($value),
+            set: fn (?string $value) => $value === null ? null : strtoupper($value),
         );
     }
 

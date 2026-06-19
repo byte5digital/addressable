@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Facade;
  * @method static PostalFormat postalFormat(?string $country)
  * @method static Country country()
  *
- * @see \Byte5\Addressable\App\Contracts\AddressRules
+ * @see AddressRulesContract
  */
 class AddressRules extends Facade
 {

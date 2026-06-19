@@ -14,15 +14,15 @@ readonly class AddressData
         public ?string $postal = null,
         public ?string $city = null,
         public ?string $region = null,
-        public ?float  $latitude = null,
-        public ?float  $longitude = null,
+        public ?float $latitude = null,
+        public ?float $longitude = null,
         public ?string $country = null,
     ) {}
 
     /**
      * Build from a loose attribute array (unknown keys ignored).
      *
-     * @param array<string, mixed> $attributes
+     * @param  array<string, mixed>  $attributes
      */
     public static function fromArray(array $attributes): self
     {

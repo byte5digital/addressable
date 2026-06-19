@@ -1,7 +1,7 @@
 <?php
 
-use Byte5\Addressable\App\Models\Address;
 use Byte5\Addressable\App\Enums\AddressType;
+use Byte5\Addressable\App\Models\Address;
 
 return [
 

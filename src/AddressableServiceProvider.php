@@ -2,8 +2,8 @@
 
 namespace Byte5\Addressable;
 
-use Byte5\Addressable\App\Contracts as Contracts;
-use Byte5\Addressable\App\Services as Services;
+use Byte5\Addressable\App\Contracts;
+use Byte5\Addressable\App\Services;
 use Illuminate\Support\ServiceProvider;
 
 class AddressableServiceProvider extends ServiceProvider

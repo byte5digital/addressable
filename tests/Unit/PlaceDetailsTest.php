@@ -38,7 +38,7 @@ it('maps the extension line to the Address columns', function () {
 });
 
 it('defaults every field to null', function () {
-    $details = new PlaceDetails();
+    $details = new PlaceDetails;
 
     expect($details->toArray())->toBe([
         'street' => null,

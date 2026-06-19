@@ -7,15 +7,15 @@ use Byte5\Addressable\App\Enums\AddressType;
 
 it('fromArray() populates all known fields', function () {
     $data = AddressData::fromArray([
-        'type'      => AddressType::Billing,
-        'street'    => 'Pariser Platz 1',
-        'extra'     => 'Apt. 5',
-        'postal'    => '10117',
-        'city'      => 'Berlin',
-        'region'    => 'Berlin',
-        'latitude'  => 52.5163,
+        'type' => AddressType::Billing,
+        'street' => 'Pariser Platz 1',
+        'extra' => 'Apt. 5',
+        'postal' => '10117',
+        'city' => 'Berlin',
+        'region' => 'Berlin',
+        'latitude' => 52.5163,
         'longitude' => 13.3777,
-        'country'   => 'DE',
+        'country' => 'DE',
     ]);
 
     expect($data->type)->toBe(AddressType::Billing)
@@ -31,7 +31,7 @@ it('fromArray() populates all known fields', function () {
 
 it('fromArray() ignores unknown keys', function () {
     $data = AddressData::fromArray([
-        'city'    => 'Berlin',
+        'city' => 'Berlin',
         'unknown' => 'ignored',
         'extra_field' => 'also ignored',
     ]);
@@ -71,7 +71,7 @@ it('toArray() passes a plain string type through unchanged', function () {
 });
 
 it('toArray() keeps null type as null', function () {
-    $data = new AddressData();
+    $data = new AddressData;
 
     expect($data->toArray()['type'])->toBeNull();
 });

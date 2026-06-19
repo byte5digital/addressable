@@ -36,7 +36,7 @@ it('addAddress with a loose array persists via fromArray', function () {
 
     $address = $model->addAddress([
         'street' => 'Unter den Linden 1',
-        'city'   => 'Berlin',
+        'city' => 'Berlin',
         'postal' => '10117',
         'country' => 'DE',
     ]);
@@ -84,10 +84,11 @@ it('addAddress routes through the container so the contract can be rebound', fun
     $model = TestModel::create(['name' => 'Acme']);
 
     $sentinel = $model->addresses()->create(['city' => 'Sentinel']);
-    $spy      = (object) ['called' => false];
+    $spy = (object) ['called' => false];
 
     app()->bind(CreatesAddresses::class, function () use ($sentinel, $spy): CreatesAddresses {
-        return new class ($sentinel, $spy) implements CreatesAddresses {
+        return new class($sentinel, $spy) implements CreatesAddresses
+        {
             public function __construct(
                 private readonly Address $sentinel,
                 private readonly object $spy,
