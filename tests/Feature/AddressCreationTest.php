@@ -84,18 +84,18 @@ it('addAddress routes through the container so the contract can be rebound', fun
     $model = TestModel::create(['name' => 'Acme']);
 
     $sentinel = $model->addresses()->create(['city' => 'Sentinel']);
-    $called   = false;
+    $spy      = (object) ['called' => false];
 
-    app()->bind(CreatesAddresses::class, function () use ($sentinel, &$called): CreatesAddresses {
-        return new class ($sentinel, $called) implements CreatesAddresses {
+    app()->bind(CreatesAddresses::class, function () use ($sentinel, $spy): CreatesAddresses {
+        return new class ($sentinel, $spy) implements CreatesAddresses {
             public function __construct(
                 private readonly Address $sentinel,
-                private bool &$called,
+                private readonly object $spy,
             ) {}
 
             public function create(Model&Addressable $owner, AddressData $data): Address
             {
-                $this->called = true;
+                $this->spy->called = true;
 
                 return $this->sentinel;
             }
@@ -104,6 +104,6 @@ it('addAddress routes through the container so the contract can be rebound', fun
 
     $result = $model->addAddress(new AddressData(city: 'Berlin'));
 
-    expect($called)->toBeTrue()
+    expect($spy->called)->toBeTrue()
         ->and($result->is($sentinel))->toBeTrue();
 });

@@ -116,7 +116,7 @@ The Address model's **own** primary key is independent of this — it stays a
 ### Address type enum
 
 The `type` column is cast to a string-backed enum. The package ships a default
-`Byte5\Addressable\App\Enums\AddressType` (`billing`, `shipping`, `primary`). You can:
+`Byte5\Addressable\App\Enums\AddressType` (`billing`, `shipping`, `home`, `work`). You can:
 
 - **Replace it** with your own enum to match your application's address roles:
 
