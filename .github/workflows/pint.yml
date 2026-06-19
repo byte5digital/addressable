@@ -1,0 +1,43 @@
+name: Laravel Pint
+
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  pint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.4'
+
+      - name: Install Dependencies
+        run: composer install --prefer-dist --no-interaction --no-scripts --no-progress
+
+      - name: Run Pint
+        run: ./vendor/bin/pint
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v8
+        id: cpr
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          commit-message: 'chore(linter): Laravel pint has beautified your code'
+          title: Pint
+          branch: pint-fixes-${{ github.head_ref }}
+          base: ${{ github.head_ref }}
+          delete-branch: true
+          branch-suffix: short-commit-hash
+
+      - name: Exit if ECS made Changes
+        if: (steps.cpr.outputs.pull-request-operation == 'created') || (steps.cpr.outputs.pull-request-operation == 'updated')
+        run: exit 1
