@@ -36,6 +36,7 @@ class AddressableServiceProvider extends ServiceProvider
 
         $this->app->singleton(Contracts\AddressRules::class, Services\AddressRules::class);
         $this->app->singleton(Contracts\Countries::class, Services\Countries::class);
+        $this->app->singleton(Contracts\CreatesAddresses::class, Services\AddressCreator::class);
 
         $this->app->singleton(Services\AddressLookupManager::class);
         $this->app->singleton(Services\AddressValidationManager::class);

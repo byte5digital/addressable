@@ -3,6 +3,8 @@
 namespace Byte5\Addressable\App\Support;
 
 use Byte5\Addressable\App\Models\Address;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Support\Facades\Config as ConfigFacade;
 
 class Config
@@ -14,6 +16,16 @@ class Config
     {
         /** @var class-string<Address> */
         return ConfigFacade::string('byte5-addressable.models.address', Address::class);
+    }
+
+    /**
+     * The configured polymorphic addresses relation for an owner model.
+     *
+     * @return MorphMany<Address, Model>
+     */
+    public static function addressesRelation(Model $owner): MorphMany
+    {
+        return $owner->morphMany(self::addressModel(), 'addressable', 'addressable_type', self::morphKey());
     }
 
     public static function addressesTable(): string
