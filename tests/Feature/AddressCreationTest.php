@@ -1,5 +1,6 @@
 <?php
 
+use Byte5\Addressable\App\Contracts\Addressable;
 use Byte5\Addressable\App\Contracts\CreatesAddresses;
 use Byte5\Addressable\App\Data\AddressData;
 use Byte5\Addressable\App\Enums\AddressType;
@@ -92,7 +93,7 @@ it('addAddress routes through the container so the contract can be rebound', fun
                 private bool &$called,
             ) {}
 
-            public function create(Model $owner, AddressData $data): Address
+            public function create(Model&Addressable $owner, AddressData $data): Address
             {
                 $this->called = true;
 

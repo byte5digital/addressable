@@ -2,6 +2,7 @@
 
 namespace Byte5\Addressable\App\Concerns;
 
+use Byte5\Addressable\App\Contracts\Addressable;
 use Byte5\Addressable\App\Contracts\CreatesAddresses;
 use Byte5\Addressable\App\Data\AddressData;
 use Byte5\Addressable\App\Enums\AddressType;
@@ -13,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
  * @phpstan-require-extends Model
+ * @phpstan-require-implements Addressable
  */
 trait HasAddresses
 {
@@ -21,7 +23,12 @@ trait HasAddresses
      */
     public function addresses(): MorphMany
     {
-        return Config::addressesRelation($this);
+        return $this->morphMany(
+            Config::addressModel(),
+            'addressable',
+            'addressable_type',
+            Config::morphKey(),
+        );
     }
 
     /**

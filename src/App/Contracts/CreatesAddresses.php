@@ -10,8 +10,6 @@ interface CreatesAddresses
 {
     /**
      * Persist a new address for the given owner model.
-     *
-     * @param  Model  $owner  A model using the HasAddresses trait.
      */
-    public function create(Model $owner, AddressData $data): Address;
+    public function create(Model&Addressable $owner, AddressData $data): Address;
 }

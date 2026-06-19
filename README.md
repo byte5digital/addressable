@@ -144,8 +144,9 @@ Add the `HasAddresses` trait to any model that should own addresses:
 
 ```php
 use Byte5\Addressable\App\Concerns\HasAddresses;
+use Byte5\Addressable\App\Contracts\Addressable;
 
-class User extends Model
+class User extends Model implements Addressable
 {
     use HasAddresses;
 }
@@ -226,9 +227,9 @@ Pass the resulting `AddressData` straight to `addAddress()`.
 ### Swapping the creation implementation
 
 Address creation is backed by `Byte5\Addressable\App\Contracts\CreatesAddresses`
-(single method: `create(Model $owner, AddressData $data): Address`). The package
-binds the default `AddressCreator` service as a singleton, but you can replace it in
-any service provider:
+(single method: `create(Model&Addressable $owner, AddressData $data): Address`). The
+package binds the default `AddressCreator` service as a singleton, but you can
+replace it in any service provider:
 
 ```php
 use Byte5\Addressable\App\Contracts\CreatesAddresses;
