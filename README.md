@@ -189,6 +189,32 @@ The columns map to [schema.org/PostalAddress](https://schema.org/PostalAddress):
 `latitude` / `longitude` are stored as `decimal(10,8)` / `decimal(11,8)` and cast
 to `decimal:8`.
 
+### Emitting a `PostalAddress`
+
+`$address->toSchemaOrg()` returns a `PostalAddress` DTO that renders to either a
+PHP array or a JSON-LD string:
+
+```php
+$address->toSchemaOrg()->toArray();
+// [
+//     '@type' => 'PostalAddress',
+//     'streetAddress' => 'Pariser Platz 1',
+//     'postalCode' => '10117',
+//     'addressLocality' => 'Berlin',
+//     'addressCountry' => 'DE',
+//     // null fields omitted; no '@context'
+// ]
+
+$address->toSchemaOrg()->toJsonLd();
+// {"@context":"https://schema.org","@type":"PostalAddress","streetAddress":"Pariser Platz 1",…}
+```
+
+`toArray()` is a **fragment** (`@type`, no `@context`) — nest it inside a parent
+entity such as `Organization`/`Person`. `toJsonLd()` is a **standalone** document
+(includes `@context`) — drop it straight into a `<script type="application/ld+json">`
+tag. Latitude/longitude are intentionally excluded, since a schema.org
+`PostalAddress` has no geo property (those belong on a `Place.geo`).
+
 ## Form validation rules
 
 Three Laravel validation rules ship for validating address input (e.g. in a

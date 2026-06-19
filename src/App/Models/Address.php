@@ -3,12 +3,21 @@
 namespace Byte5\Addressable\App\Models;
 
 use Byte5\Addressable\Database\Factories\AddressFactory;
+use Byte5\Addressable\App\Data\PostalAddress;
 use Byte5\Addressable\App\Support\Config;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
 
+/**
+ * @property string|null $street
+ * @property string|null $extra
+ * @property string|null $postal
+ * @property string|null $city
+ * @property string|null $region
+ * @property string|null $country
+ */
 class Address extends Model
 {
     /** @use HasFactory<AddressFactory> */
@@ -59,6 +68,21 @@ class Address extends Model
             'addressable',
             'addressable_type',
             Config::morphKey(),
+        );
+    }
+
+    /**
+     * The address as a schema.org PostalAddress DTO.
+     */
+    public function toSchemaOrg(): PostalAddress
+    {
+        return new PostalAddress(
+            street: $this->street,
+            extra: $this->extra,
+            postal: $this->postal,
+            city: $this->city,
+            region: $this->region,
+            country: $this->country,
         );
     }
 

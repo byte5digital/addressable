@@ -1,6 +1,7 @@
 <?php
 
 use Byte5\Addressable\App\Models\Address;
+use Byte5\Addressable\App\Data\PostalAddress;
 use Byte5\Addressable\App\Enums\AddressType;
 use Byte5\Addressable\Tests\Fixtures\CustomAddress;
 use Byte5\Addressable\Tests\Fixtures\CustomAddressType;
@@ -122,4 +123,27 @@ it('keeps type as a plain string when the enum is disabled', function() {
     $address = Address::factory()->create(['type' => 'anything']);
 
     expect($address->fresh()->type)->toBe('anything');
+});
+
+it('builds a schema.org PostalAddress from the model', function() {
+    $address = new Address([
+        'street' => 'Pariser Platz 1',
+        'extra' => 'Apt. 5',
+        'postal' => '10117',
+        'city' => 'Berlin',
+        'region' => 'Berlin',
+        'country' => 'de',
+    ]);
+
+    expect($address->toSchemaOrg())
+        ->toBeInstanceOf(PostalAddress::class)
+        ->and($address->toSchemaOrg()->toArray())->toBe([
+            '@type' => 'PostalAddress',
+            'streetAddress' => 'Pariser Platz 1',
+            'extendedAddress' => 'Apt. 5',
+            'postalCode' => '10117',
+            'addressLocality' => 'Berlin',
+            'addressRegion' => 'Berlin',
+            'addressCountry' => 'DE',
+        ]);
 });
