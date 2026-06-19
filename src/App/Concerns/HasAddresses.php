@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Relations\MorphOne;
 
 /**
  * @phpstan-require-extends Model
+ *
  * @phpstan-require-implements Addressable
  */
 trait HasAddresses

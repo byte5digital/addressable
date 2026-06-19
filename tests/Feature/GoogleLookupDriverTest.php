@@ -24,7 +24,7 @@ it('returns suggestions for a query', function () {
                             'mainText' => ['text' => 'Brandenburger Tor'],
                             'secondaryText' => ['text' => 'Berlin, Germany'],
                         ],
-                    ]
+                    ],
                 ],
             ],
         ]),

@@ -29,6 +29,6 @@ class Country implements ValidationRule
 
     private static function iso3166(): ISO3166
     {
-        return self::$iso3166 ??= new ISO3166();
+        return self::$iso3166 ??= new ISO3166;
     }
 }

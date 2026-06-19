@@ -16,7 +16,7 @@ class AddressRules implements AddressRulesContract
 
     public function country(): Country
     {
-        return new Country();
+        return new Country;
     }
 
     /**

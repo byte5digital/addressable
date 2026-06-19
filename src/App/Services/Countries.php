@@ -28,7 +28,7 @@ class Countries implements CountriesContract
         // Iterate the commerceguys list to keep its locale-specific ordering.
         return array_filter(
             $names,
-            fn(string $code): bool => isset(self::isoCodes()[$code]),
+            fn (string $code): bool => isset(self::isoCodes()[$code]),
             ARRAY_FILTER_USE_KEY,
         );
     }
@@ -51,11 +51,11 @@ class Countries implements CountriesContract
 
     private static function repository(): CountryRepository
     {
-        return self::$repository ??= new CountryRepository();
+        return self::$repository ??= new CountryRepository;
     }
 
     private static function iso3166(): ISO3166
     {
-        return self::$iso3166 ??= new ISO3166();
+        return self::$iso3166 ??= new ISO3166;
     }
 }

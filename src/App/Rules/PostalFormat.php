@@ -29,13 +29,13 @@ class PostalFormat implements ValidationRule
         // Mirror commerceguys/addressing: the pattern must match the value completely.
         preg_match('/'.$pattern.'/i', $value, $matches);
 
-        if (!isset($matches[0]) || $matches[0] !== $value) {
+        if (! isset($matches[0]) || $matches[0] !== $value) {
             $fail('byte5-addressable::validation.postal_format')->translate(['attribute' => $attribute]);
         }
     }
 
     private static function repository(): AddressFormatRepository
     {
-        return self::$repository ??= new AddressFormatRepository();
+        return self::$repository ??= new AddressFormatRepository;
     }
 }

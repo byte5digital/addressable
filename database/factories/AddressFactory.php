@@ -2,8 +2,8 @@
 
 namespace Byte5\Addressable\Database\Factories;
 
-use Byte5\Addressable\App\Models\Address;
 use Byte5\Addressable\App\Enums\AddressType;
+use Byte5\Addressable\App\Models\Address;
 use Byte5\Addressable\App\Support\Config;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

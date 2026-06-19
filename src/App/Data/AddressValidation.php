@@ -11,7 +11,7 @@ readonly class AddressValidation
      * @param  string  $provider  The driver that produced this result, e.g. `google`.
      * @param  string|null  $formattedAddress  The provider's corrected/standardised address.
      * @param  array<string, mixed>  $raw  The provider's full response payload. Provider-specific fields
-     *                                      (e.g. Google's `verdict`/`geocode`) live here.
+     *                                     (e.g. Google's `verdict`/`geocode`) live here.
      */
     public function __construct(
         public bool $valid,

@@ -41,7 +41,7 @@ class TestCase extends Orchestra
     {
         (include __DIR__.'/../database/migrations/create_addresses_table.php.stub')->up();
 
-        Schema::create('test_models', function(Blueprint $table): void {
+        Schema::create('test_models', function (Blueprint $table): void {
             $table->id();
             $table->string('name')->nullable();
             $table->timestamps();
