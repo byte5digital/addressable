@@ -2,6 +2,8 @@
 
 namespace Byte5\Addressable\App\Data;
 
+use Byte5\Addressable\App\Enums\AddressType;
+
 readonly class PlaceDetails
 {
     public function __construct(
@@ -32,5 +34,20 @@ readonly class PlaceDetails
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
         ];
+    }
+
+    public function toAddressData(AddressType|string|null $type = null): AddressData
+    {
+        return new AddressData(
+            type: $type,
+            street: $this->street,
+            extra: $this->extra,
+            postal: $this->postal,
+            city: $this->city,
+            region: $this->region,
+            latitude: $this->latitude,
+            longitude: $this->longitude,
+            country: $this->country,
+        );
     }
 }

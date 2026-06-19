@@ -116,7 +116,7 @@ The Address model's **own** primary key is independent of this — it stays a
 ### Address type enum
 
 The `type` column is cast to a string-backed enum. The package ships a default
-`Byte5\Addressable\App\Enums\AddressType` (`billing`, `shipping`, `primary`). You can:
+`Byte5\Addressable\App\Enums\AddressType` (`billing`, `shipping`, `home`, `work`). You can:
 
 - **Replace it** with your own enum to match your application's address roles:
 
@@ -144,8 +144,9 @@ Add the `HasAddresses` trait to any model that should own addresses:
 
 ```php
 use Byte5\Addressable\App\Concerns\HasAddresses;
+use Byte5\Addressable\App\Contracts\Addressable;
 
-class User extends Model
+class User extends Model implements Addressable
 {
     use HasAddresses;
 }
@@ -171,6 +172,74 @@ $user->latestAddress;
 // The owning model from an address (morphTo)
 $address->addressable;
 ```
+
+## Creating addresses
+
+`$model->addAddress($data, $type)` is the standardised entry point for persisting a
+new address. It accepts either an `AddressData` DTO or a loose attribute array, and
+an optional `AddressType` (or its backing string) that overrides whatever type is
+already on the data:
+
+```php
+use Byte5\Addressable\App\Data\AddressData;
+use Byte5\Addressable\App\Enums\AddressType;
+
+// From a typed DTO
+$user->addAddress(new AddressData(
+    street: 'Pariser Platz 1',
+    postal: '10117',
+    city:   'Berlin',
+    country: 'DE',
+), AddressType::Billing);
+
+// From a loose array — internally calls AddressData::fromArray()
+$user->addAddress([
+    'street'  => 'Pariser Platz 1',
+    'postal'  => '10117',
+    'city'    => 'Berlin',
+    'country' => 'DE',
+    'type'    => 'billing',
+]);
+```
+
+Both forms return the persisted `Address` instance.
+
+### `AddressData` — the write DTO
+
+`AddressData` is a readonly DTO that carries the nine address fields (`type`,
+`street`, `extra`, `postal`, `city`, `region`, `latitude`, `longitude`, `country`).
+All fields are optional (default `null`).
+
+The lookup and schema.org DTOs provide typed bridges:
+
+```php
+// From a resolved Google Place
+$details = AddressLookup::details($placeId);   // PlaceDetails
+$data    = $details->toAddressData(AddressType::Shipping);
+
+// From a schema.org PostalAddress DTO
+$postal = $address->toSchemaOrg();             // PostalAddress
+$data   = $postal->toAddressData(AddressType::Billing);
+```
+
+Pass the resulting `AddressData` straight to `addAddress()`.
+
+### Swapping the creation implementation
+
+Address creation is backed by `Byte5\Addressable\App\Contracts\CreatesAddresses`
+(single method: `create(Model&Addressable $owner, AddressData $data): Address`). The
+package binds the default `AddressCreator` service as a singleton, but you can
+replace it in any service provider:
+
+```php
+use Byte5\Addressable\App\Contracts\CreatesAddresses;
+
+$this->app->bind(CreatesAddresses::class, MyDedupingAddressCreator::class);
+```
+
+The package enforces **no deduplication, per-type uniqueness, or default/primary
+address policy** — that is intentional. Add whatever cardinality rules your
+application needs here.
 
 ## schema.org mapping
 
